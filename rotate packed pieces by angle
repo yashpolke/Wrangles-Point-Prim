@@ -1,0 +1,6 @@
+float am = chf('angle');
+
+matrix3 rm = primintrinsic(0, 'transform', @primnum);
+rotate(rm, radians(fit01(rand(@ptnum), 15, 45))*am,normalize(rand(@ptnum)));
+
+setprimintrinsic(0, 'transform', @primnum, rm);a
