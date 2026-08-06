@@ -1,0 +1,39 @@
+float g = ch("exp");
+float d_max = ch("maxdist");
+int handle = pcopen(0, "P", @P, d_max, chi("maxpts"));
+
+float cnt=0.0;
+vector p_sum = 0;
+vector p;
+float d;
+int idx;
+float w_sum = 0;
+float w=1.0;
+string grp = chs("srcgroup");
+int has_grp = chi("usesrcgroup");
+
+while(pciterate(handle)) {
+    pcimport(handle, "P", p);
+    pcimport(handle, "point.distance", d);
+    pcimport(handle, "point.number", idx);
+
+    if ( !has_grp || ( has_grp && inpointgroup(0, grp, idx) ) )
+    {
+        if (g>0.0) {
+            w = pow( fit(d, 0, d_max, 1, 0),  g );
+        }
+    
+        if (true) {
+            p_sum += p*w;
+            cnt += w;
+        }
+    }
+}
+
+if (cnt>0) {
+    float b1 = ch("blend"), b0 = 1.0-b1;
+    p_sum /= cnt;
+    v@P = p_sum*b1 + v@P *b0;
+}
+
+pcclose(handle);
