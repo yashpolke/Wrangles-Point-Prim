@@ -1,0 +1,21 @@
+// 1. Get impact position from second input
+vector center = point(1, "P", 0);
+
+// 2. Setup falloff based on distance
+float dist = distance(@P, center);
+float max_dist = chf("max_dist"); // Radius of effect
+float falloff = 1.0 - clamp(dist / max_dist, 0, 1);
+falloff = pow(falloff, chf("shape")); // Adjust the "curve" of the rotation
+
+// 3. Define Rotation
+float angle = chf("angle_multiplier") * falloff;
+vector axis = normalize(chv("rotation_axis")); 
+
+// 4. Create and apply rotation matrix
+matrix3 rot = ident();
+rotate(rot, radians(angle), axis);
+
+// 5. Update the packed transform intrinsic
+matrix3 xform = primintrinsic(0, "transform", @ptnum);
+xform *= rot; 
+setprimintrinsic(0, "transform", @ptnum, xform);
