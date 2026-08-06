@@ -1,0 +1,4 @@
+vector v = v@v * @TimeInc;
+float d = dot( normalize(v@v), normalize(v@N) );
+
+v@P += v*d * chf('mult');
