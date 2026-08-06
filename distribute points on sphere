@@ -1,0 +1,13 @@
+// evenly distributed points on sphere
+// ("golden section spiral")
+// see: http://www.xsi-blog.com/archives/115
+//
+int i = @ptnum;
+float inc = 3.14159265 * (3.0 - sqrt(5.0));
+float off = 2.0 / (float) @Npt;
+
+float y   = (i*off) - 1.0 + (off/2.0);
+float r   = sqrt(1.0 - y*y);
+float phi = i * inc;
+
+@P = set( cos(phi)*r, y, sin(phi)*r );
