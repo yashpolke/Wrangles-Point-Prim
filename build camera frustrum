@@ -1,0 +1,19 @@
+//normalize box
+vector min, max;
+getbbox(0, min, max);
+@P = fit(@P, min, max, set(0,0,0), set(1,1,1))-set(0,0,1);
+
+//Overscan
+@P -= set(0.5,0.5,-0.5);
+@P *= set(chf("overscan"),chf("overscan"),1);
+@P += set(0.5,0.5,-0.5);
+
+
+//FAR CLIP
+@P *= set(1, 1, chf("FarClipping")-1-chf("NearClipping"));
+
+//NEAR CLIP
+@P += set(0, 0, -chf("NearClipping"));
+
+//Create Frustum
+@P = fromNDC(chs("camera"), @P);
