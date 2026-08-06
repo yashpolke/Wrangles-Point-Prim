@@ -1,0 +1,7 @@
+// requires initial pscale values
+//
+string campath = chsop("camera_path");
+matrix cxi = invert(optransform(campath));
+vector P = v@P * cxi;
+float dist = length(P);
+f@pscale = max(f@pscale, f@pscale*dist);
