@@ -1,0 +1,8 @@
+// (re)builds "name" attributes
+// from "path" attributes
+//
+// very useful for generating a "match"
+// attribute for packed fragments.
+//
+string name[] = split(s@path, "/");
+s@name = name[arraylength(name)-1];
