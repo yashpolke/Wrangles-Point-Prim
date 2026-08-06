@@ -1,0 +1,11 @@
+string campath = chsop("camera_path");
+float near = chf("camera_near");
+
+matrix
+    cx = optransform(campath),
+    cxi = invert(cx);
+
+vector P = v@P * cxi;
+P = set( -P.x/P.z, -P.y/P.z, -1.0 ) * near;
+P *= cx;
+v@P = P;
