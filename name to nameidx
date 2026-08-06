@@ -1,0 +1,4 @@
+// generate index values for per-prim name attributes
+//
+string vals[] = uniquevals(0, "prim", "name");
+i@nameindex = find(vals, s@name);
